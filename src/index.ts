@@ -2,6 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const morgan = require('morgan');
+const { connection } = require('./dbConnection/dbConnection');
 
 // Cargamos las variables de entorno desde el archivo .env.
 dotenv.config();
@@ -20,3 +21,6 @@ app.use(morgan('dev'));
 app.listen(port, () => {
   console.log(`Estamos escuchando el puerto ${port}`);
 });
+
+// Inicia la conexión a la base de datos
+connection();
