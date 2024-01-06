@@ -6,6 +6,7 @@ const { connection } = require('./dbConnection/dbConnection');
 
 //importar rutas
 const userRoutes = require('./routes/User.routes');
+const interviewRoutes = require('./routes/Interview.routes');
 
 // Cargamos las variables de entorno desde el archivo .env.
 dotenv.config();
@@ -22,6 +23,7 @@ app.use(morgan('dev'));
 
 //instanciar rutas
 app.use('/users', userRoutes);
+app.use('/interviews', interviewRoutes);
 
 // Iniciamos el servidor y nos suscribimos al evento de escucha del puerto.
 app.listen(port, () => {
