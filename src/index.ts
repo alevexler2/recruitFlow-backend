@@ -4,6 +4,9 @@ const cors = require('cors');
 const morgan = require('morgan');
 const { connection } = require('./dbConnection/dbConnection');
 
+//importar rutas
+const userRoutes = require('./routes/User.routes');
+
 // Cargamos las variables de entorno desde el archivo .env.
 dotenv.config();
 
@@ -16,6 +19,9 @@ const port = process.env.PORT;
 app.use(express.json());
 app.use(cors());
 app.use(morgan('dev'));
+
+//instanciar rutas
+app.use('/users', userRoutes);
 
 // Iniciamos el servidor y nos suscribimos al evento de escucha del puerto.
 app.listen(port, () => {
