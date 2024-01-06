@@ -13,13 +13,9 @@ const createUserService = async (name: string, lastName: string, email: string, 
     return { error: 'Email already exists' };
   }
 
-  // Find out if a user with the same email already exists in Firebase.
-  const existingUserFirebase = await admin.auth().getUserByEmail(email);
-  if (existingUserFirebase) {
-    return { error: 'Email already exists in Firebase' };
-  }
-  // Encrypt the password
+  // // Encrypt the password
   const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
+  console.log(hashedPassword)
 
   // Create the user in MongoDB.
   const userMongo = await User.create({ name, lastName, email, password: hashedPassword });
