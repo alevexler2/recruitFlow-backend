@@ -1,25 +1,20 @@
 import { Schema, model, Types } from "mongoose";
 
 const interviewSchema = new Schema({
-  usuarioId: {
+  userId: {
     type: Types.ObjectId,
     ref: 'User',
     required: true,
   },
-  datosPersonales: {
-    nombre: String,
-    email: String,
-    fechaNacimiento: String,
-    telefono: String,
-    educacion: String,
-    profesion: String,
+  assessment: {
+    type: String,
+    required: true
   },
-  experiencia: [{
-    empresa: String,
-    duracion: String,
-    rol: String,
-  }],
-  evaluacionFinal: String,
+  interview: {
+    type: String,
+    required: true
+  }
+
 });
 
 export const Interview = model('Interview', interviewSchema); 
