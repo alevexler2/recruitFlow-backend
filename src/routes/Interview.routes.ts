@@ -4,6 +4,6 @@ const { iniciarConversacion } = require('../controller/Interview.controller');
 
 const userRoute = express();
 
-userRoute.post('/start-interview', iniciarConversacion);
+userRoute.post('/', iniciarConversacion);
 
 module.exports = userRoute;

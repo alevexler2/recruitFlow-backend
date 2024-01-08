@@ -1,12 +1,13 @@
 import OpenAI from "openai";
 const dotenv = require('dotenv');
 import { Interview } from '../models/InterviewModel';
+import { User } from '../models/UserModel';
 
 dotenv.config();
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
-const startChat = async (historyChat: any[], endInterview: boolean | undefined, userId: string) => {
+const startChat = async (historyChat: any[], endInterview: boolean | undefined, userEmail: string) => {
 
   if (historyChat && !endInterview) {
     const respuestaIA = await sendMessageToChatGpt(historyChat);
@@ -19,9 +20,13 @@ const startChat = async (historyChat: any[], endInterview: boolean | undefined, 
     };
     historyChat.push(finalEvaluation);
     const respuestaIA = await sendMessageToChatGpt(historyChat);
-    const interviewMongo = await Interview.create({ userId: userId, assessment: respuestaIA[respuestaIA.length - 1].content, interview: JSON.stringify(respuestaIA) });
+    const user = await User.findOne({ email: JSON.parse(userEmail) });
 
-    return "Entrevista finalizada";
+    if (user) {
+      const newInterview = await Interview.create({ userId: user._id, assessment: respuestaIA[respuestaIA.length - 1].content, interview: JSON.stringify(respuestaIA) });
+    }
+
+    return historyChat;
   }
 
   const mensajeInicial = "Inicia una entrevista conversacional para un candidato de trabajo, simulando que sos un reclutador llamado recruitFlow. la entrevista sera para un puesto de desarrollador fullStack ssr, explicale que la entrevista constara de tres etapas, datos personales, experiencia laboral y juego de rol. Arranca la entrevista preguntandole sobre sus datos personales.";

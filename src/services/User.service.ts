@@ -15,7 +15,6 @@ const createUserService = async (name: string, lastName: string, email: string, 
 
   // // Encrypt the password
   const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
-  console.log(hashedPassword)
 
   // Create the user in MongoDB.
   const userMongo = await User.create({ name, lastName, email, password: hashedPassword });
